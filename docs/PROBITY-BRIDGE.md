@@ -50,13 +50,15 @@ claim was extracted, or that a real-world action was independently witnessed.
 
 ## Replay a retained decision offline
 
-Run replay with the project environment. It reads local files, regenerates
-the company checks, reapplies action policy to the retained Ezio response,
-and calls the pinned Probity kernel. It does not call Ezio or execute actions.
+Run `uv sync --locked` before replay. The commands use the project environment and locked dependencies.
+
+Replay reads local files, regenerates the company checks, reapplies action policy
+to the retained Ezio response, and calls the pinned Probity kernel. It does not
+call Ezio or execute actions.
 
 ```bash
-.venv/bin/python wrapper/replay.py wrapper/audit_log.jsonl
-.venv/bin/python wrapper/replay.py downloaded-record.json
+uv run --locked wrapper/replay.py wrapper/audit_log.jsonl
+uv run --locked wrapper/replay.py downloaded-record.json
 ```
 
 The default consumer-selected policy is `wrapper/policy.json`. Use

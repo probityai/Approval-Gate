@@ -4,8 +4,17 @@ Use actual working responses. Do not substitute a slide or predicted outcome for
 
 ## Start the page
 
+From the repository root, install the locked dependencies:
+
 ```bash
-.venv/bin/python gate.py serve --persona customer_support
+uv sync --locked
+```
+
+Start the local simulator and persona page:
+
+```bash
+uv run --locked gate.py serve --persona customer_support \
+  --wrapper-cmd '.venv/bin/python wrapper/serve.py'
 ```
 
 Open the localhost URL printed by the command. Use only the supplied fictional Lumen Cloud data.

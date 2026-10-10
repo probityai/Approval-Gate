@@ -1,1 +1,4 @@
+cffi==2.1.1 ; platform_python_implementation != 'PyPy'
 cryptography==50.0.2
+pycparser==3.11 ; implementation_name != 'PyPy' and platform_python_implementation != 'PyPy'
+typing-extensions==4.16.0 ; python_full_version < '3.11'

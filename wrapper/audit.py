@@ -23,7 +23,7 @@ def latest(limit=25):
 
 def record(persona, text, context, decision):
     entry = {
-        "timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),  # noqa: UP017 -- datetime.UTC requires Python 3.11; starter supports 3.10.
+        "timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "persona": persona,
         "input": text,
         "context": context,

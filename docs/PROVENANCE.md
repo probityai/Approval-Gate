@@ -38,6 +38,10 @@ The checker uses bounded explicit rules rather than arbitrary-language semantic 
 
 OpenAI Codex AI assistants were used for source inspection, planning, implementation, tests, UI, and documentation, with parallel agents assigned separate responsibilities. The participant remains responsible for reviewing the actual behavior and submitting the work. GitHub access was used to obtain project sources and preserve the event work.
 
-The runtime uses the supplied mock Ezio over localhost and local fictional data. Python 3.10+ and the dependencies in `requirements.txt` are required; `requirements-dev.txt` adds development checks. Once installed, the demo needs no external service. It requires no live Ezio credentials, TokenRouter credits, Keenable credits, external LLM calls, or Gmail data. Do not include personal or confidential information in demo inputs.
+The runtime uses the supplied mock Ezio over localhost and local fictional data. The project supports Python 3.10 or later. `.python-version` selects Python 3.12. Install runtime and development dependencies with `uv sync --locked`.
+
+`pyproject.toml` defines the dependencies, and `uv.lock` pins their resolved versions. The `requirements.txt` and `requirements-dev.txt` files are generated compatibility exports for pip users. They preserve the published pip setup workflow. CI checks that those exports match the lockfile.
+
+After installation, the demo needs no external service. It requires no live Ezio credentials, TokenRouter credits, Keenable credits, external LLM calls, or Gmail data. Do not include personal or confidential information in demo inputs.
 
 Only claim verification outcomes demonstrated by retained runs. No performance numbers are asserted in this document.
