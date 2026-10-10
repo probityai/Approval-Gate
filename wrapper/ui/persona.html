@@ -1,79 +1,346 @@
 <!doctype html>
-<!--
-  YOUR PERSONA PAGE. This is a skeleton; the UI is yours to design (25 points, optional).
-  Any approach is fine: edit this file, replace it with a built React/Vue/Svelte app in this folder,
-  or write plain JS. wrapper/serve.py serves everything in wrapper/ui/, with persona.html at "/".
-  Offline only: no CDNs or external services at demo time.
-
-  WHAT THE PAGE MUST DO (what judges score)
-    1. SEND AN INPUT, GET A RESPONSE: a draft goes to POST /decide (your wrapper), and the page shows the
-       decision, the reason, the evidence, and whether the mock action ran.
-    2. SIMULATE THE ACTION FROM A TEST INPUT: let the user pick a sample input (GET /api/samples?persona=...),
-       send it, and show the gate working: APPROVE -> the action ran; HOLD/BLOCK -> the action did NOT run.
-    3. Make it usable by someone in your persona's job: clear risk, errors shown plainly, a review step.
-
-  RULES
-    - Decisions come only from POST /decide. Do not decide, call the mock, or run the action in the browser.
-    - Latest test-run results are NOT your job: run `python3 gate.py results` for the color-coded viewer.
--->
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TODO: your page title</title>
-<style>
-  /* TODO: design it. Think about who uses this: the person who is about to send / submit / publish. */
-  body { font: 16px/1.5 system-ui, sans-serif; max-width: 44rem; margin: 2rem auto; padding: 0 1rem; }
-  textarea { width: 100%; min-height: 8rem; }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Probity Gate · Customer support</title>
+  <style>
+    :root{--ink:#132a32;--muted:#52686e;--paper:#f5f6f1;--white:#fff;--line:#dce3de;--green:#14664f;--green-bg:#e5f4ed;--amber:#845006;--amber-bg:#fff1d8;--red:#a52d38;--red-bg:#fdebed;--radius:16px}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:wait;opacity:.65}a{color:var(--green)}:focus-visible{outline:3px solid #2c9781;outline-offset:3px}header{background:var(--ink);color:#fff}header .bar{max-width:1300px;margin:auto;display:flex;justify-content:space-between;align-items:center;padding:22px 32px}.brand{font-size:21px;font-weight:750;letter-spacing:-.5px}.brand-mark{display:inline-grid;place-items:center;width:31px;height:31px;border:1px solid #81bba5;border-radius:9px;margin-right:9px;color:#bce5cc}.header-note{font-size:12px;color:#c4d7d5}.container{max-width:1300px;margin:auto;padding:30px 32px 40px}.eyebrow{font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:1.5px;color:var(--green)}h1{font-size:clamp(27px,3vw,38px);line-height:1.15;letter-spacing:-1.3px;margin:9px 0 11px}h2{font-size:18px;margin:0}h3{font-size:13px;margin:0 0 8px}.intro{color:var(--muted);max-width:790px;margin:0}.flow{display:flex;gap:8px;flex-wrap:wrap;margin:21px 0 27px}.flow span{font-size:12px;padding:5px 10px;background:#e9ede7;border-radius:5px}.flow .arrow{padding:5px 0;background:none;color:#7d918c}.grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:24px;align-items:start}.panel{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.panel-head{display:flex;align-items:center;justify-content:space-between;padding:20px 23px;border-bottom:1px solid var(--line);gap:12px}.tag{font-size:11px;padding:4px 8px;border-radius:20px;background:var(--paper);white-space:nowrap;color:var(--muted)}.content{padding:23px}.field{margin-bottom:19px}label,.field-label{display:block;font-size:12px;font-weight:700;margin-bottom:7px}input,select,textarea{width:100%;border:1px solid #c7d3cc;border-radius:8px;background:#fff;color:var(--ink);padding:10px 12px}textarea{resize:vertical;min-height:188px;line-height:1.6}.counter{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:var(--muted);margin-top:6px}.context{display:grid;grid-template-columns:1fr 1fr;gap:15px}.hint{font-size:12px;color:var(--muted);margin:6px 0 0}.primary{width:100%;background:var(--green);color:white;border:0;border-radius:9px;padding:13px 17px;font-weight:700}.primary:hover{background:#0b4e3b}.secondary{background:white;border:1px solid #c8d4cd;border-radius:7px;padding:8px 12px;color:var(--ink);font-size:12px;font-weight:650}.secondary:hover{background:var(--paper)}.submit-note{font-size:11px;color:var(--muted);text-align:center;margin:9px 0 0}.examples{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:12px 0 20px}.example{border:1px solid var(--line);border-radius:9px;text-align:left;padding:11px;background:var(--paper);color:var(--ink)}.example:hover{border-color:var(--green);background:#edf3ec}.example b{display:block;font-size:12px;margin-bottom:4px}.example small{display:block;font-size:11px;line-height:1.4;color:var(--muted)}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;background:var(--green)}.dot.red{background:var(--red)}.dot.amber{background:var(--amber)}.empty{padding:48px 28px;text-align:center}.empty-icon{width:56px;height:56px;display:grid;place-items:center;margin:0 auto 17px;border:1px solid var(--line);border-radius:15px;font-size:23px;color:var(--green)}.empty h3{font-size:18px}.empty p{font-size:13px;color:var(--muted);max-width:350px;margin:8px auto}.result-top{padding:22px 23px;background:var(--green-bg);border-bottom:1px solid var(--line)}.result-top.hold{background:var(--amber-bg)}.result-top.block{background:var(--red-bg)}.decision-label{display:flex;align-items:center;gap:10px;color:var(--green);font-weight:800;font-size:23px;letter-spacing:-.4px}.hold .decision-label{color:var(--amber)}.block .decision-label{color:var(--red)}.decision-icon{font-size:22px}.result-top p{margin:8px 0 0;font-size:13px}.action-status{padding:11px 23px;background:#f9faf7;border-bottom:1px solid var(--line);font-size:12px;font-weight:650}.result-body{padding:20px 23px}.source-section{margin-bottom:20px}.source-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:10px}.source-title h3{margin:0;font-size:13px}.source-title span{font-size:10px;background:#f0f3ef;padding:3px 7px;border-radius:4px;color:var(--muted)}.evidence-list{padding:0;list-style:none;margin:0}.evidence-list li{font-size:12px;line-height:1.6;padding:10px 11px;margin:7px 0;background:#f7f9f5;border:1px solid #e3e9e0;border-radius:7px;overflow-wrap:anywhere}.subtle{font-size:12px;color:var(--muted)}.signals{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.signal{padding:10px;background:#f5f7f3;border-radius:7px}.signal span{display:block;color:var(--muted);font-size:10px}.signal strong{display:block;font-size:16px;margin-top:2px}.summary{font-size:12px;line-height:1.6}.claims{padding-left:18px;font-size:12px}.claims li{margin:7px 0;overflow-wrap:anywhere}.divider{border-top:1px solid var(--line);margin:18px 0}details{border:1px solid var(--line);border-radius:8px;margin-top:12px}summary{cursor:pointer;font-size:12px;font-weight:650;padding:10px 12px}details .detail-body{padding:0 12px 12px}pre{margin:0;background:#f5f7f3;padding:11px;border-radius:6px;overflow:auto;max-height:300px;font:11px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}.packet-meta{font-size:11px;color:var(--muted);overflow-wrap:anywhere;margin:0 0 9px}.review{background:#fffbf3;border:1px solid #f0dfbd;padding:13px;border-radius:9px;margin-top:18px}.review textarea{min-height:75px;font-size:12px}.review p{font-size:11px;color:var(--muted);margin:7px 0}.review .secondary{margin-top:8px}.review-status{font-size:11px;margin-top:8px;color:var(--green)}.result-actions{display:flex;gap:8px;margin-top:16px}.alert{background:var(--red-bg);color:var(--red);border:1px solid #f1c5cb;padding:12px;border-radius:8px;font-size:12px;margin-bottom:15px}.loading{padding:50px 25px;text-align:center;color:var(--muted)}.spinner{width:28px;height:28px;border:3px solid #dfe9e1;border-top-color:var(--green);border-radius:50%;margin:auto auto 14px;animation:spin .9s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}footer{font-size:11px;color:var(--muted);margin-top:23px;display:flex;justify-content:space-between;gap:20px}.hidden,[hidden]{display:none!important}@media(max-width:850px){.grid{grid-template-columns:1fr}.container{padding:25px 18px}header .bar{padding:18px}.header-note{max-width:145px;text-align:right}.empty{padding:30px}}@media(max-width:440px){.examples{grid-template-columns:1fr}.example small{display:inline}.context{grid-template-columns:1fr}.panel-head,.content,.result-body{padding:18px}footer{display:block}.signals{grid-template-columns:1fr 1fr}}@media(prefers-reduced-motion:reduce){.spinner{animation:none}}
+  </style>
+  <style>
+    .skip-link{position:absolute;top:-70px;left:18px;padding:10px 15px;background:#fff;z-index:10}.skip-link:focus{top:12px}.eyebrow{text-transform:none;letter-spacing:0;font-size:13px}.evidence-heading{margin:0 0 8px}.dimension-signals{margin-top:15px}.signal strong small{font-size:10px;font-weight:400;color:var(--muted)}.claim-status{font-weight:700}.claim-status.supported{color:var(--green)}.claim-status.contradicted{color:var(--red)}.claim-source{display:block;font-size:11px;color:var(--muted);margin-top:3px}.finding-list{padding-left:18px;font-size:12px}.finding-list li{margin:8px 0;overflow-wrap:anywhere}.finding-list strong{display:block}.result-top p,.summary,.action-status{overflow-wrap:anywhere}.decision-label{flex-wrap:wrap}.slow-note{max-width:350px;margin:12px auto 0}.audit-section{margin-top:24px}.audit-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.audit-list{padding:0;margin:14px 0 0;list-style:none}.audit-list li{padding:12px 0;border-top:1px solid var(--line);font-size:12px;overflow-wrap:anywhere}.audit-list time{display:block;color:var(--muted);font-size:11px}.audit-list strong{margin-right:9px}.audit-note{font-size:12px;color:var(--muted);margin:9px 0 0}.signals.four{grid-template-columns:repeat(2,minmax(0,1fr))}.signals.dimension-signals{grid-template-columns:repeat(3,minmax(0,1fr))}.signals .signal{min-width:0}.signal strong{overflow-wrap:anywhere}footer a{white-space:nowrap}@media(max-width:440px){.signals.dimension-signals{grid-template-columns:1fr 1fr}.result-actions{flex-wrap:wrap}.audit-head{align-items:flex-start}}
+  </style>
 </head>
 <body>
-<h1>TODO: name this screen for your persona's job</h1>
-
-<!-- TODO (1): inputs. Text is required; context is a JSON object your persona rules may use. -->
-<label for="text">Draft</label>
-<textarea id="text"></textarea>
-<button id="check">Check</button>
-
-<!-- TODO (2): sample picker. Fill this from /api/samples (see loadSamples below). -->
-<select id="samples"></select>
-<button id="simulate">Simulate with this sample</button>
-
-<!-- TODO (3): present the result for a human, not as raw JSON. Replace this <pre>. -->
-<pre id="out"></pre>
-
-<script>
-// Set this to the persona you chose: customer_support | paralegal | financial_analyst
-const PERSONA = "customer_support";
-
-// Plumbing: the one call every version of this page makes. Returns {decision, reason, evidence, action_executed, ...}.
-async function decide(text, context = {}) {
-  const response = await fetch("/decide", { method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text, persona: PERSONA, context }) });
-  const body = await response.json();
-  if (!response.ok) throw new Error(body.error || "Request failed");
-  return body;
-}
-
-// Plumbing: sample inputs from the practice set: [{id, text, context}, ...]
-async function loadSamples() {
-  const response = await fetch("/api/samples?persona=" + PERSONA);
-  return (await response.json()).samples;
-}
-
-// TODO: show the result. Decision, reason, and evidence are what a person needs to decide; also show
-// whether the action ran (result.action_executed). Handle loading and errors (including a slow or down Ezio).
-function showResult(result) {
-  document.getElementById("out").textContent = JSON.stringify(result, null, 2);
-}
-
-// TODO: wire the buttons. Disable them while a request is running; catch errors and show them.
-document.getElementById("check").onclick = async () => {
-  showResult(await decide(document.getElementById("text").value));
-};
-
-// TODO: populate #samples from loadSamples(), then make "Simulate" send the chosen sample's text and context
-// through decide() and show clearly whether the action ran.
-</script>
+  <a href="#workspace" class="skip-link">Skip to draft</a>
+  <header><div class="bar"><div class="brand"><span class="brand-mark" aria-hidden="true">P</span>Probity Gate</div><div class="header-note">Decision-Grade AI · Buildathon demo</div></div></header>
+  <main class="container" id="workspace" tabindex="-1">
+    <div class="eyebrow">Customer support · Approval gate</div>
+    <h1>Evidence before action.</h1>
+    <p class="intro">An AI draft is a proposal. Compare it with company policy and Ezio’s findings before the mock email action can run.</p>
+    <div class="flow" aria-label="Decision workflow"><span>1. Draft + customer context</span><span class="arrow" aria-hidden="true">→</span><span>2. Independent policy checks + Ezio</span><span class="arrow" aria-hidden="true">→</span><span>3. Approve, hold, or block</span></div>
+    <div class="grid">
+      <section class="panel" aria-labelledby="draft-heading">
+        <div class="panel-head"><h2 id="draft-heading">Review a draft</h2><span class="tag">Local simulated workflow</span></div>
+        <div class="content">
+          <p class="field-label">Start with a contrast</p>
+          <div class="examples">
+            <button class="example" type="button" data-sample="cs-03" disabled><b><span class="dot"></span>Eligible offer</b><small>Correct discount and context</small></button>
+            <button class="example" type="button" data-sample="cs-07" disabled><b><span class="dot red"></span>Wrong discount</b><small>A clean score can miss a fact</small></button>
+            <button class="example" type="button" data-sample="cs-11" disabled><b><span class="dot amber"></span>Needs a manager</b><small>A promise beyond authority</small></button>
+          </div>
+          <form id="gate-form">
+            <div class="field"><label for="sample">Practice input</label><select id="sample" disabled><option value="">Write your own draft</option></select><p id="sample-status" class="hint" role="status">Loading provided practice inputs…</p></div>
+            <div class="field"><label for="draft">AI-generated email draft</label><textarea id="draft" maxlength="20000" required placeholder="Paste the exact draft you want checked. Use fictional, non-sensitive information only." aria-describedby="draft-help"></textarea><div class="counter" id="draft-help"><span>Exact input is included in the downloadable record.</span><span id="character-count">0 / 20,000</span></div></div>
+            <div class="context">
+              <div class="field"><label for="plan">Customer’s current plan</label><select id="plan"><option>Starter</option><option selected>Pro</option><option>Business</option><option>Enterprise</option><option value="">Unknown / not supplied</option></select></div>
+              <div class="field"><label for="tenure">Customer tenure, in months</label><input id="tenure" type="number" min="0" max="1200" step="1" value="18" placeholder="Unknown" aria-describedby="tenure-help"><p id="tenure-help" class="hint">Leave empty when unknown.</p></div>
+            </div>
+            <div id="input-error" class="alert" role="alert" hidden></div>
+            <button class="primary" id="run-button" type="submit">Check draft & apply gate <span aria-hidden="true">→</span></button>
+            <p class="submit-note">APPROVE runs the mock action. HOLD and BLOCK do not.</p>
+          </form>
+        </div>
+      </section>
+      <section class="panel" aria-labelledby="result-heading" aria-busy="false" id="result-panel">
+        <div class="panel-head"><h2 id="result-heading">Decision & evidence</h2><span class="tag" id="result-tag">Awaiting input</span></div>
+        <div id="empty-result" class="empty"><div class="empty-icon" aria-hidden="true">✓</div><h3>A score is a signal.</h3><p>The decision also needs policy checks, customer context, and a reason you can inspect.</p><p>Choose an example or enter a draft to see the gate.</p></div>
+        <div id="loading-result" class="loading" role="status" hidden><div class="spinner" aria-hidden="true"></div>Checking policy and requesting Ezio’s findings…<p class="hint slow-note" id="loading-note">The server will report the decision and whether the mock action ran.</p></div>
+        <div id="completed-result" hidden>
+          <div class="result-top" id="result-top"><div class="decision-label" id="decision-label" role="status"><span id="decision-icon" class="decision-icon" aria-hidden="true"></span><span id="decision"></span></div><p id="reason"></p></div>
+          <div class="action-status" id="action-status"></div>
+          <div class="result-body">
+            <section class="source-section"><h3 class="evidence-heading">Evidence behind the decision</h3><ul class="evidence-list" id="decision-evidence"></ul></section>
+            <section class="source-section"><div class="source-title"><h3>Company-source checks</h3><span>Separate from Ezio</span></div><ul class="evidence-list" id="source-evidence"></ul><p id="no-findings" class="subtle" hidden>No structured company-source comparisons were returned. This is not evidence that all claims were checked.</p></section>
+            <div class="divider"></div>
+            <section><div class="source-title"><h3>Ezio findings</h3><span>Local simulated API</span></div><div class="signals four"><div class="signal"><span>Reported tier</span><strong id="ezio-tier">—</strong></div><div class="signal"><span>Reported score</span><strong id="ezio-score">—</strong></div><div class="signal"><span>Accuracy status</span><strong id="ezio-accuracy">—</strong></div><div class="signal"><span>Accuracy score</span><strong id="ezio-accuracy-score">—</strong></div></div><p class="summary" id="ezio-summary"></p><div class="signals dimension-signals"><div class="signal"><span>Tone</span><strong id="ezio-tone">—</strong></div><div class="signal"><span>Bias</span><strong id="ezio-bias">—</strong></div><div class="signal"><span>Agreement</span><strong id="ezio-agreement">—</strong></div></div><p class="hint">The summary score does not authorize a wrong fact or a promise beyond the agent’s authority.</p><ul class="claims" id="ezio-claims"></ul><ul class="finding-list" id="ezio-findings"></ul><p class="hint">These are Ezio’s reported signals, not independent observations of a real-world action.</p></section>
+            <details><summary>Inspect the retained decision packet</summary><div class="detail-body"><p class="packet-meta" id="packet-meta"></p><pre id="packet-json"></pre></div></details>
+            <div class="review" id="review-panel" hidden><h3>Human review handoff</h3><p id="review-question"></p><label for="review-note">Reviewer note</label><textarea id="review-note" maxlength="2000" placeholder="Record what must be confirmed or changed. Do not include sensitive information."></textarea><button class="secondary" type="button" id="save-review">Keep note with this record</button><div id="review-status" class="review-status" role="status"></div><p>The note stays in this page and download. It does not authorize, send, or override the gate.</p></div>
+            <div class="result-actions"><button class="secondary" id="download" type="button">Download decision record</button></div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <section class="panel audit-section" aria-labelledby="audit-heading"><div class="content"><div class="audit-head"><h2 id="audit-heading">Recent decision records</h2><button class="secondary" type="button" id="refresh-audit">Refresh records</button></div><p class="audit-note" id="audit-status" role="status">The server record is available when this demo supports it.</p><ul class="audit-list" id="audit-entries"></ul></div></section>
+    <footer><span>Probity · Evidence and policy around agent actions · <a href="https://github.com/probityai" target="_blank" rel="noopener noreferrer">GitHub</a></span><span>Demo only: simulated evidence and mock email execution.</span></footer>
+  </main>
+  <script>
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const state = {samples: [], context: {}, record: null, pending: false, auditPending: false};
+    const pretty = value => JSON.stringify(value, null, 2);
+    const show = (id, visible) => { $(id).hidden = !visible; };
+    const setText = (id, value) => { $(id).textContent = value == null ? '—' : String(value); };
+    function appendItems(id, items) {
+      const list = $(id);
+      list.replaceChildren();
+      items.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = typeof item === 'string' ? item : pretty(item);
+        list.appendChild(li);
+      });
+    }
+    function countCharacters() { setText('character-count', `${$('draft').value.length.toLocaleString()} / 20,000`); }
+    function resetResult() {
+      state.record = null;
+      show('completed-result', false);
+      show('empty-result', true);
+      setText('result-tag', 'Draft changed · run again');
+    }
+    function loadSample(id) {
+      const item = state.samples.find(sample => sample.id === id);
+      if (!item || state.pending) return;
+      $('sample').value = item.id;
+      $('draft').value = item.text;
+      state.context = {...item.context};
+      const plan = item.context?.plan;
+      $('plan').value = [...$('plan').options].some(option => option.value === plan) ? plan : '';
+      const tenure = item.context?.customer_tenure_months ?? item.context?.tenure_months;
+      $('tenure').value = tenure == null ? '' : String(tenure);
+      countCharacters();
+      resetResult();
+      show('input-error', false);
+    }
+    async function loadSamples() {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      try {
+        const response = await fetch('/api/samples?persona=customer_support', {signal: controller.signal});
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const body = await response.json();
+        if (!Array.isArray(body.samples)) throw new Error('Missing sample list');
+        state.samples = body.samples.filter(item => typeof item.id === 'string' && typeof item.text === 'string');
+        state.samples.forEach(item => {
+          const option = document.createElement('option');
+          option.value = item.id;
+          option.textContent = `${item.id} · ${item.text.slice(0, 65)}${item.text.length > 65 ? '…' : ''}`;
+          $('sample').appendChild(option);
+        });
+        setText('sample-status', 'Choose a practice input, then check it with the gate.');
+        loadSample('cs-07');
+        setText('result-tag', 'Ready to check');
+      } catch (error) {
+        setText('sample-status', `Practice inputs unavailable (${error.name === 'AbortError' ? 'request timed out' : error.message}). You can still enter a draft.`);
+      } finally {
+        clearTimeout(timeout);
+        $('sample').disabled = state.samples.length === 0;
+        document.querySelectorAll('[data-sample]').forEach(button => {button.disabled = !state.samples.some(item => item.id === button.dataset.sample);});
+      }
+    }
+    function renderClaims(claims) {
+      const list = $('ezio-claims');
+      list.replaceChildren();
+      claims.forEach(claim => {
+        if (!claim || typeof claim !== 'object') return;
+        const item = document.createElement('li');
+        const status = document.createElement('span');
+        status.className = 'claim-status';
+        if (['supported', 'contradicted'].includes(claim.verdict)) status.classList.add(claim.verdict);
+        status.textContent = `${String(claim.verdict || 'unresolved').replaceAll('_', ' ')}: `;
+        item.append(status, document.createTextNode(claim.claim || claim.text || 'Claim text not supplied'));
+        if (claim.source?.publisher) {
+          const source = document.createElement('span');
+          source.className = 'claim-source';
+          source.textContent = `Reported source: ${claim.source.publisher}`;
+          item.appendChild(source);
+        }
+        list.appendChild(item);
+      });
+    }
+    function renderFindings(findings) {
+      const list = $('ezio-findings');
+      list.replaceChildren();
+      findings.forEach(finding => {
+        if (!finding || typeof finding !== 'object') return;
+        const item = document.createElement('li');
+        const title = document.createElement('strong');
+        title.textContent = finding.title || finding.dimension || 'Finding';
+        item.append(title, document.createTextNode(finding.body || finding.message || 'No detail supplied.'));
+        list.appendChild(item);
+      });
+    }
+    function renderEzio(ezio) {
+      const verdict = ezio?.verdict || {};
+      const accuracy = ezio?.dimensions?.accuracy || {};
+      setText('ezio-tier', verdict.tier);
+      setText('ezio-score', verdict.score);
+      setText('ezio-accuracy', accuracy.status?.replaceAll('_', ' '));
+      const accuracyLabels = {not_scored: 'Not scored', unavailable: 'Unavailable'};
+      setText('ezio-accuracy-score', accuracy.status === 'scored' ? accuracy.score : accuracyLabels[accuracy.status] || 'Not supplied');
+      ['tone', 'bias', 'agreement'].forEach(dimension => setText(`ezio-${dimension}`, ezio?.dimensions?.[dimension]?.score));
+      setText('ezio-summary', ezio?.error ? `Ezio unavailable: ${ezio.error}` : verdict.summary || 'No summary supplied.');
+      renderClaims(Array.isArray(ezio?.claims) ? ezio.claims : []);
+      renderFindings(Array.isArray(ezio?.findings) ? ezio.findings : []);
+    }
+    function renderCompanyChecks(packet) {
+      const checks = Array.isArray(packet?.checks) ? packet.checks.filter(check => check?.source === 'company_policy') : [];
+      const list = $('source-evidence');
+      list.replaceChildren();
+      checks.forEach(check => {
+        const item = document.createElement('li');
+        const status = document.createElement('strong');
+        status.textContent = `${String(check.status || 'not established').replaceAll('_', ' ')} · `;
+        const claim = document.createElement('span');
+        claim.textContent = check.claim || 'Claim not supplied';
+        item.append(status, claim);
+        if (check.message) {
+          const message = document.createElement('div');
+          message.textContent = check.message;
+          item.appendChild(message);
+        }
+        const source = document.createElement('div');
+        source.className = 'subtle';
+        source.textContent = `Local source: ${check.source_path || 'not supplied'}`;
+        item.appendChild(source);
+        if (check.observed != null || check.expected != null) {
+          const comparison = document.createElement('div');
+          comparison.className = 'subtle';
+          comparison.textContent = `Observed: ${pretty(check.observed)} · Expected: ${pretty(check.expected)}`;
+          item.appendChild(comparison);
+        }
+        list.appendChild(item);
+      });
+      show('no-findings', checks.length === 0);
+    }
+    function renderResult(result, request) {
+      const labels = {APPROVE: ['Approve', '✓', ''], HOLD_FOR_REVIEW: ['Hold for review', '!', 'hold'], BLOCK: ['Block', '×', 'block']};
+      const label = labels[result.decision];
+      if (!label || typeof result.action_executed !== 'boolean') throw new Error('The server returned an incomplete decision. No action status can be established.');
+      state.record = {created_at: new Date().toISOString(), workflow: 'customer_support', input: request, result};
+      $('result-top').className = `result-top ${label[2]}`;
+      setText('decision', label[0]);
+      setText('decision-icon', label[1]);
+      setText('reason', result.reason || 'No reason supplied.');
+      setText('action-status', result.action_executed ? 'Mock email action executed · reported by the server' : 'Mock email action not executed · reported by the server');
+      setText('result-tag', 'Latest checked draft');
+      const packet = result.decision_packet || result;
+      appendItems('decision-evidence', Array.isArray(result.evidence) && result.evidence.length ? result.evidence : ['The server supplied no evidence list. Inspect the reason and retained decision packet.']);
+      renderCompanyChecks(packet);
+      renderEzio(result.ezio);
+      const policyHash = packet.policy_sha256 || packet.policy?.sha256 || packet.policy_hash;
+      setText('packet-meta', policyHash ? `Consumer policy SHA-256: ${policyHash}` : 'Raw returned decision. A policy hash was not supplied by the server.');
+      setText('packet-json', pretty(packet));
+      show('review-panel', result.decision === 'HOLD_FOR_REVIEW');
+      setText('review-question', `Resolve before any new action: ${result.reason || 'review the evidence and authority requirements.'}`);
+      $('review-note').value = '';
+      setText('review-status', '');
+      show('completed-result', true);
+      loadAudit();
+    }
+    function setPending(pending) {
+      state.pending = pending;
+      $('result-panel').setAttribute('aria-busy', String(pending));
+      $('run-button').disabled = pending;
+      $('run-button').textContent = pending ? 'Checking…' : 'Check draft & apply gate →';
+      document.querySelectorAll('#gate-form input, #gate-form select, #gate-form textarea').forEach(element => {element.disabled = pending;});
+      $('sample').disabled = pending || state.samples.length === 0;
+      document.querySelectorAll('[data-sample]').forEach(button => {button.disabled = pending || !state.samples.some(item => item.id === button.dataset.sample);});
+      show('loading-result', pending);
+    }
+    async function submitDraft(event) {
+      event.preventDefault();
+      if (state.pending) return;
+      const text = $('draft').value;
+      if (!text.trim() || text.length > 20000) return;
+      const context = {...state.context};
+      delete context.tenure_months;
+      delete context.customer_tenure_months;
+      if ($('plan').value) context.plan = $('plan').value; else delete context.plan;
+      if ($('tenure').value !== '') context.customer_tenure_months = Number($('tenure').value);
+      const request = {persona: 'customer_support', text, context};
+      show('input-error', false);
+      show('empty-result', false);
+      show('completed-result', false);
+      state.record = null;
+      setPending(true);
+      setText('loading-note', 'The server will report the decision and whether the mock action ran.');
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 70000);
+      const slow = setTimeout(() => setText('loading-note', 'This check takes longer than usual. Wait for the server’s result before you retry.'), 5000);
+      try {
+        const response = await fetch('/decide', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(request), signal: controller.signal});
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || `HTTP ${response.status}`);
+        renderResult(result, request);
+      } catch (error) {
+        const message = error.name === 'AbortError' ? 'Request timed out. The server may still be processing it; action status is unknown. Check server records before retrying.' : `Could not establish a decision: ${error.message}. If the request reached the server, check its records before retrying.`;
+        setText('input-error', message);
+        show('input-error', true);
+        show('empty-result', true);
+        setText('result-tag', 'No confirmed result');
+      } finally {
+        clearTimeout(timeout);
+        clearTimeout(slow);
+        setPending(false);
+      }
+    }
+    async function loadAudit() {
+      if (state.auditPending) return;
+      state.auditPending = true;
+      $('refresh-audit').disabled = true;
+      setText('audit-status', 'Loading server records…');
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      try {
+        const response = await fetch('/api/audit', {signal: controller.signal});
+        if (response.status === 404) {
+          setText('audit-status', 'This demo does not provide a server history view. Download the current decision record to keep it.');
+          return;
+        }
+        const body = await response.json();
+        if (!response.ok) throw new Error(body.error || `HTTP ${response.status}`);
+        if (!Array.isArray(body.entries)) throw new Error('Missing record list');
+        const entries = body.entries;
+        const list = $('audit-entries');
+        list.replaceChildren();
+        entries.slice(-8).reverse().forEach(entry => {
+          const item = document.createElement('li');
+          const result = entry.result || entry;
+          const decision = document.createElement('strong');
+          decision.textContent = String(result.decision || 'Decision unavailable').replaceAll('_', ' ');
+          const reason = document.createElement('span');
+          reason.textContent = result.reason || entry.reason || 'No reason supplied.';
+          item.append(decision, reason);
+          const time = document.createElement('time');
+          time.textContent = entry.timestamp || entry.created_at || entry.at || entry.ts || '';
+          item.appendChild(time);
+          list.appendChild(item);
+        });
+        setText('audit-status', entries.length ? 'Recent records reported by the server.' : 'No decision records returned. Check a draft to create a record.');
+      } catch (error) {
+        setText('audit-status', `Could not load server records: ${error.name === 'AbortError' ? 'request timed out' : error.message}.`);
+      } finally {
+        clearTimeout(timeout);
+        state.auditPending = false;
+        $('refresh-audit').disabled = false;
+      }
+    }
+    function downloadRecord() {
+      if (!state.record) return;
+      const blob = new Blob([pretty(state.record) + '\n'], {type: 'application/json'});
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = `probity-gate-${state.record.result.decision.toLowerCase()}-${Date.now()}.json`;
+      anchor.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+    $('gate-form').addEventListener('submit', submitDraft);
+    $('sample').addEventListener('change', event => {if (event.target.value) loadSample(event.target.value);});
+    ['draft', 'plan', 'tenure'].forEach(id => $(id).addEventListener('input', () => {countCharacters(); resetResult();}));
+    document.querySelectorAll('[data-sample]').forEach(button => button.addEventListener('click', () => loadSample(button.dataset.sample)));
+    $('download').addEventListener('click', downloadRecord);
+    $('refresh-audit').addEventListener('click', loadAudit);
+    $('save-review').addEventListener('click', () => {
+      if (!state.record) return;
+      const note = $('review-note').value.trim();
+      if (!note) {setText('review-status', 'Enter a note first.'); return;}
+      state.record.review_handoff = {note, recorded_at: new Date().toISOString(), action: 'note_only'};
+      setText('review-status', 'Note attached to this page’s record. Download to retain it. No action was executed.');
+    });
+    loadSamples();
+  </script>
 </body>
 </html>

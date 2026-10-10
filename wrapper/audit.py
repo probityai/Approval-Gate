@@ -2,6 +2,7 @@
 import json
 import os
 import threading
+from collections import deque
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -10,9 +11,19 @@ LOG = Path(os.getenv("GATE_LOG_DIR") or Path(__file__).parent) / "audit_log.json
 _lock = threading.Lock()
 
 
+def latest(limit=25):
+    """Read the latest retained records with bounded memory and the writer lock."""
+    with _lock:
+        if not LOG.exists():
+            return []
+        with LOG.open() as handle:
+            lines = deque(handle, maxlen=limit)
+    return [json.loads(line) for line in lines if line.strip()]
+
+
 def record(persona, text, context, decision):
     entry = {
-        "timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),  # noqa: UP017 -- datetime.UTC requires Python 3.11; starter supports 3.10.
         "persona": persona,
         "input": text,
         "context": context,
@@ -20,6 +31,7 @@ def record(persona, text, context, decision):
         "reason": decision.reason,
         "evidence": decision.evidence,
         "ezio": decision.ezio,
+        "decision_packet": getattr(decision, "decision_packet", {}),
     }
     with _lock, LOG.open("a") as f:
         f.write(json.dumps(entry) + "\n")

@@ -1,0 +1,134 @@
+{
+  "repository": "ezioai/Approval-Gate",
+  "commit": "fa098c4b829ad0dc639c429410aabed6ed956f78",
+  "protected_files": [
+    {
+      "path": "Dockerfile",
+      "git_blob_sha": "1870a3203e891c7151efe8e5c0dcf5912f91b425"
+    },
+    {
+      "path": "example_client.py",
+      "git_blob_sha": "68693d9c49cf23833558f6549236c80f51aeed39"
+    },
+    {
+      "path": "final/final_set.sealed",
+      "git_blob_sha": "d7d7bdd7b0c1e3b54b54b9343b961efe27f4cc0b"
+    },
+    {
+      "path": "fixtures.json",
+      "git_blob_sha": "61986e24382dc883b56e6b9f29adf10f904db3ba"
+    },
+    {
+      "path": "gate.py",
+      "git_blob_sha": "5bf3c992706ad4efcbe7437e0e4cc5d5f668914a"
+    },
+    {
+      "path": "harness/__init__.py",
+      "git_blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "harness/judging.py",
+      "git_blob_sha": "d0dccd027f4f2eee3884727d3c5bd7c69d7cae60"
+    },
+    {
+      "path": "harness/results.html",
+      "git_blob_sha": "33108cb9e49b1dd0d98bf0919f74d914e3d02d75"
+    },
+    {
+      "path": "harness/results_server.py",
+      "git_blob_sha": "b1b2a1a2c449221de0b58dc9618477b76287adde"
+    },
+    {
+      "path": "harness/runner.py",
+      "git_blob_sha": "43d44b9baed6c54da70b1b06dd81c2229ad3f399"
+    },
+    {
+      "path": "harness/seal.py",
+      "git_blob_sha": "09e132fa897c19b32c2e099558398e7f28ff13f6"
+    },
+    {
+      "path": "mock_ezio.py",
+      "git_blob_sha": "d57cd4b3d4a91bd808e0e4fb7042bd6036c45887"
+    },
+    {
+      "path": "personas/README.md",
+      "git_blob_sha": "2e3d1bec6fcb4f3a1c50bfe6a719e9a9f0d175a2"
+    },
+    {
+      "path": "personas/customer_support/business_rules.md",
+      "git_blob_sha": "77363ffb213647818ef8d1097b52e51d5e60b263"
+    },
+    {
+      "path": "personas/customer_support/policies.json",
+      "git_blob_sha": "b1db7b46cc4f1c8e185bf1ad72891f443077b224"
+    },
+    {
+      "path": "personas/customer_support/practice_set.json",
+      "git_blob_sha": "2f4a36762d22016ef09c187105ebfa2b3f56426d"
+    },
+    {
+      "path": "personas/customer_support/price_sheet.csv",
+      "git_blob_sha": "7e0f4ecf4d3d0963dd70cc1da4e731b0e57fa1f1"
+    },
+    {
+      "path": "personas/financial_analyst/business_rules.md",
+      "git_blob_sha": "5fc33110e0c4fcef4596d14d511562df177b773f"
+    },
+    {
+      "path": "personas/financial_analyst/fact_sheet.json",
+      "git_blob_sha": "fb9d02253791d472710fff8b2e11ce4099fc00a7"
+    },
+    {
+      "path": "personas/financial_analyst/practice_set.json",
+      "git_blob_sha": "6306cbe55e12d9af3e9d3dd34aff3d4f48c0046f"
+    },
+    {
+      "path": "personas/paralegal/business_rules.md",
+      "git_blob_sha": "7b0675ac2484f7250b149baaf25268b0d267429a"
+    },
+    {
+      "path": "personas/paralegal/known_fabricated.json",
+      "git_blob_sha": "a265490b58717fd5c26c773249aeb09acc18ae04"
+    },
+    {
+      "path": "personas/paralegal/practice_set.json",
+      "git_blob_sha": "d9ceb5549d9c5ecefd720ae154bd3b7882468f80"
+    },
+    {
+      "path": "personas/paralegal/trusted_citations.json",
+      "git_blob_sha": "b288b877e4fc9922cd7c198a9d189933c7f7a922"
+    },
+    {
+      "path": "test_contract.py",
+      "git_blob_sha": "917fda013d0773bbc1addab44374c3307b4fdb76"
+    },
+    {
+      "path": "test_harness.py",
+      "git_blob_sha": "8f105ea8a6ff0bacd900798089970e41ce1b5378"
+    },
+    {
+      "path": "test_mock.py",
+      "git_blob_sha": "62dbe48bdffb3d4721c36c52a0a9870ba8ebc156"
+    },
+    {
+      "path": "wrapper/.gitignore",
+      "git_blob_sha": "6792467463b6b806721f0a536df25053337612af"
+    },
+    {
+      "path": "wrapper/README.md",
+      "git_blob_sha": "47f4ce7dfad388c35e0157950cc097d6558a5f8c"
+    },
+    {
+      "path": "wrapper/evaluate.py",
+      "git_blob_sha": "15e6d3780cb8884e32bc467bd81b86c66f3cefb8"
+    },
+    {
+      "path": "wrapper/ezio_client.py",
+      "git_blob_sha": "0909141e0207e3af342fe2934dd267e43ec4490d"
+    },
+    {
+      "path": "wrapper/mock_actions.py",
+      "git_blob_sha": "e5c7848ee315009fbcbd957053a3a5d27ae93894"
+    }
+  ]
+}

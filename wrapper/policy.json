@@ -1,21 +1,28 @@
 {
-  "_help": "Your policy knobs. Every threshold needs a one-sentence 'why' (you'll be asked in the demo). evaluate.py warns while any 'why' still says TODO.",
-
   "on_ezio_failure": "HOLD_FOR_REVIEW",
-  "on_ezio_failure_why": "TODO: if Ezio can't be reached, do you fail open (APPROVE) or fail closed (HOLD_FOR_REVIEW / BLOCK)? Why?",
-
-  "tier_decisions": { "GREEN": "APPROVE", "YELLOW": "HOLD_FOR_REVIEW", "RED": "BLOCK" },
-  "tier_decisions_why": "TODO: why does each tier map to that decision for your business?",
-
-  "dimension_minimums": {
-    "tone":      { "hold_below": 0, "why": "TODO" },
-    "bias":      { "hold_below": 0, "why": "TODO" },
-    "agreement": { "hold_below": 0, "why": "TODO" }
+  "on_ezio_failure_why": "Missing verification requires review; an independently found contradiction still blocks.",
+  "tier_decisions": {
+    "GREEN": "APPROVE",
+    "YELLOW": "HOLD_FOR_REVIEW",
+    "RED": "HOLD_FOR_REVIEW"
   },
-
+  "tier_decisions_why": "Tier alone cannot establish a false fact: explicit claim or company contradictions block; low aggregate quality requires review.",
+  "dimension_minimums": {
+    "tone": {
+      "hold_below": 70,
+      "why": "Below 70 requires human review of customer-facing quality; this heuristic is configurable, not a calibrated probability."
+    },
+    "bias": {
+      "hold_below": 70,
+      "why": "Below 70 requires human review of customer-facing quality; this heuristic is configurable, not a calibrated probability."
+    },
+    "agreement": {
+      "hold_below": 70,
+      "why": "Below 70 requires human review of customer-facing quality; this heuristic is configurable, not a calibrated probability."
+    }
+  },
   "when_accuracy_not_scored": "ignore",
-  "when_accuracy_not_scored_why": "TODO: 'not scored' means no claims were checked. Is that a problem for your persona?",
-
+  "when_accuracy_not_scored_why": "A claim-free acknowledgement can proceed when company checks and other dimensions pass.",
   "when_accuracy_unavailable": "HOLD_FOR_REVIEW",
-  "when_accuracy_unavailable_why": "TODO: the fact-check service was down. What should happen?"
+  "when_accuracy_unavailable_why": "Accuracy evidence unavailable requires review before customer communication."
 }

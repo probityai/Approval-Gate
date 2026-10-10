@@ -1,0 +1,86 @@
+{
+  "repository": "https://github.com/probityai/probity-verify",
+  "commit": "a2a7e23413be0ab0ad1001d60085a2ff21eaa907",
+  "license": "Apache-2.0",
+  "scope": "Unmodified core and complete transitive Python import dependencies. No A2A transport or CLI vendored.",
+  "files": [
+    {
+      "path": "src/probity_verify/__init__.py",
+      "git_blob_sha": "f84d0e0a85a2ae2a7089cbb5b702e7236780b764",
+      "sha256": "1894f94526dfd5a6701945c5deadcc68af6146cdcffdd59487fc21e602ac91b4",
+      "bytes": 163
+    },
+    {
+      "path": "src/probity_verify/adapters/__init__.py",
+      "git_blob_sha": "1816102dd8158de12c55e66938e3bd74887d8248",
+      "sha256": "45cab0c7b01954d230539f2dbefdb15e571f542ea8b56ed7d25386beb964a20b",
+      "bytes": 75
+    },
+    {
+      "path": "src/probity_verify/adapters/authority_anchor.py",
+      "git_blob_sha": "864e608fc2eedcdd9d77faee0d5dfab2ba932a3e",
+      "sha256": "bb5b7b34cba370a5255be4dcc9f4d6decde98ebe35d2711d432efd2824db445e",
+      "bytes": 7520
+    },
+    {
+      "path": "src/probity_verify/adapters/brokered_file_write.py",
+      "git_blob_sha": "e597e1d3f557ad5149124567e9c48400a57b470c",
+      "sha256": "3edaf56335feaff57afa2f8f5bbe9632991a45b04626724b45b467406e20792a",
+      "bytes": 11043
+    },
+    {
+      "path": "src/probity_verify/adapters/event_absence.py",
+      "git_blob_sha": "c217b65643acbcffab383b149d169730d972aaa3",
+      "sha256": "84d59a9a73c2eaffaec043e97742ddece5c79e9fd101f7cb090b7613ce9a163a",
+      "bytes": 11997
+    },
+    {
+      "path": "src/probity_verify/adapters/operand_lineage.py",
+      "git_blob_sha": "d13f6d3e82d9a1d09c047a477cb31806879d3b88",
+      "sha256": "a24ae4f5e3b0517a1a9030c8a698128061be65bd0aa8d0880d9b4c99a74fa83b",
+      "bytes": 12072
+    },
+    {
+      "path": "src/probity_verify/adapters/source_coverage.py",
+      "git_blob_sha": "96c4a0f1fec728a6deca0db57c01086621951151",
+      "sha256": "81d0fd601c71333284fc24295ce34f46f3b39fbb5fffdd25a8ca8031dc1fba5f",
+      "bytes": 9068
+    },
+    {
+      "path": "src/probity_verify/adapters/spend_reservation.py",
+      "git_blob_sha": "2ddfc20fcf6f789efe406a4332dddbe2e4f9e800",
+      "sha256": "c7763c9aa8220ca46a230a9d1a052f5dbf53f1b2e1a38e60f9c6a6786fa57a8b",
+      "bytes": 17222
+    },
+    {
+      "path": "src/probity_verify/broker_records.py",
+      "git_blob_sha": "7026e56db26b0910585e85d2b5f3a283380a3481",
+      "sha256": "1dbc1e72cb300e022be6ba68d27bd19bd2a27024e7481ef11ec5259ba4b9399c",
+      "bytes": 21386
+    },
+    {
+      "path": "src/probity_verify/common.py",
+      "git_blob_sha": "9cdf7b69af69993a9643d159b27f5d541f7a7f23",
+      "sha256": "f88b1ad6655deceb20a53fada139a23a031a24dbb0c4acad30b21cb611ea06fd",
+      "bytes": 7470
+    },
+    {
+      "path": "src/probity_verify/core.py",
+      "git_blob_sha": "f3931e4a1285614ed545079efd1a99649009a82f",
+      "sha256": "6312d4df1a028616c9e6ddec4487721768ecfaf7f2eab49e270f8c85cad1c371",
+      "bytes": 3203
+    },
+    {
+      "path": "src/probity_verify/json_input.py",
+      "git_blob_sha": "674b28dcbf5efcec0cd48518e858b3c31b8af075",
+      "sha256": "ccb4c6fd7c0041cd567c6c65af317d77d02c747e74e9b7468271ee0a011c653c",
+      "bytes": 2114
+    },
+    {
+      "path": "LICENSE",
+      "git_blob_sha": "9ab74de02c30f8c28d3890849711b4d556dc439c",
+      "sha256": "8b506a9d145be0a6fbef3f0519996faf84c770f8ab8d32d120c8682f2ad6181f",
+      "bytes": 11343
+    }
+  ]
+}

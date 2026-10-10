@@ -5,7 +5,10 @@ from dataclasses import asdict
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
+import audit
 import mock_actions
+from ezio_client import finite_number
+
 from wrapper import APPROVE, decide
 
 UI_DIR = Path(__file__).parent / "ui"
@@ -49,6 +52,11 @@ class Handler(BaseHTTPRequestHandler):
         route, _, query = self.path.partition("?")
         if route == "/health":
             return self.send_json(200, {"status": "ok"})
+        if route == "/api/audit":
+            try:
+                return self.send_json(200, {"entries": audit.latest()})
+            except (OSError, ValueError):
+                return self.send_json(503, {"error": "Retained records could not be read"})
         if route == "/api/samples":
             persona = dict(p.split("=", 1) for p in query.split("&") if "=" in p).get("persona")
             if persona not in PERSONAS:
@@ -73,17 +81,17 @@ class Handler(BaseHTTPRequestHandler):
             length = int(self.headers.get("Content-Length") or 0)
             if not 0 < length <= 1_000_000:
                 raise ValueError("Body must be 1 to 1000000 bytes")
-            payload = json.loads(self.rfile.read(length))
+            payload = json.loads(self.rfile.read(length), parse_float=finite_number, parse_constant=finite_number)
             if not isinstance(payload, dict):
-                raise ValueError("Body must be a JSON object")
+                raise TypeError("Body must be a JSON object")
             text, persona, context = payload.get("text"), payload.get("persona"), payload.get("context", {})
             if not isinstance(text, str) or not text.strip() or len(text) > 20000:
                 raise ValueError("text must be a non-empty string of at most 20000 characters")
             if not isinstance(persona, str) or persona not in PERSONAS:
                 raise ValueError("Unknown persona")
             if not isinstance(context, dict):
-                raise ValueError("context must be an object")
-        except (ValueError, UnicodeDecodeError, OSError):
+                raise TypeError("context must be an object")
+        except (TypeError, ValueError, UnicodeDecodeError, OSError):
             return self.send_json(400, {"error": "Invalid request: supply text, persona, and an optional context object"})
         try:
             result = decide(text, context, persona)
@@ -91,7 +99,7 @@ class Handler(BaseHTTPRequestHandler):
             if execute:
                 mock_actions.run_for_persona(persona, text)
             self.send_json(200, {**asdict(result), "action_executed": execute})
-        except Exception:
+        except Exception:  # noqa: BLE001 -- Contain arbitrary decision/action failures at the HTTP boundary.
             self.send_json(500, {"error": "Wrapper failed; inspect the decision implementation"})
 
 

@@ -8,3 +8,16 @@ __pycache__/
 *.jsonl
 runs/
 results/*.practice.*
+.venv/
+.test-deps/
+.pytest_cache/
+.hypothesis/
+.ruff_cache/
+.coverage
+.coverage.*
+coverage.json
+artifacts/
+pip-metadata-*/
+pip-unpack-*/
+approval-gate-*/
+pytest-of-root/

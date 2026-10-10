@@ -1,0 +1,5 @@
+-r requirements.txt
+pytest==9.1.1
+hypothesis==6.168.5
+ruff==0.17.0
+coverage==7.16.2
