@@ -27,6 +27,6 @@ Open the [Probity AI organization](https://github.com/probityai) after the worki
 
 The new repository applies the verifier to a support workflow. It adds claim binding for several prices in one sentence, independent policy checks, an action gate, a persona UI, and offline replay.
 
-The authentic upstream verifier remains unchanged. The event improvements live in `probityai/probity-ezio-gate`. The demo does not expose the private sandbox product.
+The authentic upstream verifier remains unchanged. The event improvements live in the public [Probity Approval Gate repository](https://github.com/probityai/Approval-Gate). The demo does not expose the private sandbox product.
 
 Integration details and exact scope: [PROBITY-BRIDGE.md](PROBITY-BRIDGE.md). Reuse details and pinned sources: [PROVENANCE.md](PROVENANCE.md).
