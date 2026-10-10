@@ -1,20 +1,4 @@
-# Probity Gate
-
-Customer-support approval gate built during the Decision-Grade AI build window.
-It combines the provided simulated Ezio API with selected company-policy checks
-and the authentic, pinned Probity decision kernel.
-
-**Start with [PROJECT.md](../PROJECT.md)** for this implementation's setup,
-practice command, tests, and official judging instructions. It requires
-Python 3.10+ and the dependency in `requirements.txt`.
-
-[Submission guide](../docs/SUBMISSION.md) · [One-page policy](../output/pdf/decision-policy.pdf)
-· [Scope and provenance](../docs/PROVENANCE.md)
-
-The following instructions describe the imported event starter; the
-standard-library-only claim applies to that original starter.
-
-## Original Approval Gate starter
+# Approval Gate starter
 
 **A trust score doesn't make a decision. Your wrapper does.**
 
