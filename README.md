@@ -1,5 +1,7 @@
 # Probity Gate
 
+This public repository is frozen as a reference for the October 10, 2026 customer-support simulation, with usable commands and retained results. It is not a production service.
+
 Probity Gate checks evidence and applies policy before a customer-support agent sends a mock email.
 
 Built for support leads, it combines the supplied Ezio simulator with company prices, discount eligibility, and authority rules. The authentic [Probity verifier](https://github.com/probityai/probity-verify) produces the evidence decision.
